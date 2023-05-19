@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1560143a753dae74c94312d95db0dbc9, type: 3}
+  m_Name: Copy Cat
+  m_EditorClassIdentifier: 
+  CardName: Copy Cat
+  CardDescription: Target a unit and Summon a friendly copy.
+  CardArt: {fileID: 0}
+  CardSchool: 1
+  CardTier: 1
+  ManaCost: 4
+  SummonData: {fileID: 0}
+  SpellEffects:
+  - Effect: 32768
+    Target: 1545
+    AttributeOne: 1
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 0
+  ResourceOne: 9
+  ResourceOneAmount: 1
+  ResourceTwo: 9
+  ResourceTwoAmount: 1

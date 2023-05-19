@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1560143a753dae74c94312d95db0dbc9, type: 3}
+  m_Name: Shielding Winds
+  m_EditorClassIdentifier: 
+  CardName: Shielding Winds
+  CardDescription: All friendly units gain two HP.
+  CardArt: {fileID: 1621531244, guid: a50e7878fe34da44f96b71862ca16ff2, type: 3}
+  CardSchool: 1
+  CardTier: 1
+  ManaCost: 2
+  SummonData: {fileID: 0}
+  SpellEffects:
+  - Effect: 1024
+    Target: 552
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 2
+    AttributeFour: 0
+  ResourceOne: 9
+  ResourceOneAmount: 1
+  ResourceTwo: 9
+  ResourceTwoAmount: 1

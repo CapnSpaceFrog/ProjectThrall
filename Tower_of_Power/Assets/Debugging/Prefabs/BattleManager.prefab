@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6972325556041667048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6972325556041667050}
+  - component: {fileID: 6972325556041667051}
+  m_Layer: 0
+  m_Name: BattleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6972325556041667050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6972325556041667048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6972325556041667051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6972325556041667048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c6a25c677751b46a892047ad3dc3cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattleCam: {fileID: 0}
+  MouseWorldYOffset: 10
+  Crosshair: {fileID: 0}
+  HoverCardPos: {x: -16.8, y: 6, z: 0}
+  HoverCardScale: {x: 2.45, y: 2.65, z: 0.1}
+  PlayerHero: {fileID: 0}
+  EnemyHero: {fileID: 0}
+  StartingDraw: 4
+  CardPrefab: {fileID: 874392513915915476, guid: e68ed505480e42e45891bb8b10a4470e,
+    type: 3}
+  BackOfCardPrefab: {fileID: 874392513915915476, guid: fd54e2efb454cd14d83595dde54b9496,
+    type: 3}
+  UnitPrefab: {fileID: 5881408491131252791, guid: 9ebbae660ec6f8d4da0c462dfe797738,
+    type: 3}
+  UnitEffectPrefab: {fileID: 5881408491131252791, guid: c93df7dc2340d844990f86c793b5e9ee,
+    type: 3}
+  RowEffectPrefab: {fileID: 5881408491131252791, guid: 2c3ed5509596b3a4a9f275dd59971093,
+    type: 3}
+  TurnTimeLimit: 120
+  ActiveHeroEndedTurn: 0
+  CommanderPortraits:
+  - {fileID: 2047138381, guid: 162a08e604ebf374b9047e1ce897235c, type: 3}
+  - {fileID: 450173825, guid: 162a08e604ebf374b9047e1ce897235c, type: 3}
+  - {fileID: 614949, guid: 162a08e604ebf374b9047e1ce897235c, type: 3}

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea114ac1f1bdd7742be4c6bccc86b625, type: 3}
+  m_Name: Banneret
+  m_EditorClassIdentifier: 
+  SummonName: Banneret
+  SummonArt: {fileID: 1344691357, guid: 6a35d9b7dc390f248aebe93d7fd96465, type: 3}
+  BaseAttack: 1
+  BaseHealth: 2
+  Range: 1
+  BaseKeywords: 384
+  AbilityEffects:
+  - Trigger: 1
+    Effect: 1048576
+    Target: 17344
+    AttributeOne: 8
+    AttributeTwo: 0
+    AttributeThree: 0
+  - Trigger: 0
+    Effect: 1024
+    Target: 4096
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 2

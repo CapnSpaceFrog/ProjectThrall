@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea114ac1f1bdd7742be4c6bccc86b625, type: 3}
+  m_Name: Earth Pillar
+  m_EditorClassIdentifier: 
+  SummonName: Earth Pillar
+  SummonArt: {fileID: 1456886186, guid: a50e7878fe34da44f96b71862ca16ff2, type: 3}
+  BaseAttack: 0
+  BaseHealth: 2
+  Range: 0
+  BaseKeywords: 65536
+  AbilityEffects:
+  - Trigger: 0
+    Effect: 2048
+    Target: 2048
+    AttributeOne: 0
+    AttributeTwo: 2
+    AttributeThree: 0

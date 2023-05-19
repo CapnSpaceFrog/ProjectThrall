@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1560143a753dae74c94312d95db0dbc9, type: 3}
+  m_Name: Knight of Udnaj
+  m_EditorClassIdentifier: 
+  CardName: Knight of Udnaj
+  CardDescription: Summon a 4/10 Knight with Blocking.
+  CardArt: {fileID: 1494001485, guid: 6a35d9b7dc390f248aebe93d7fd96465, type: 3}
+  CardSchool: 25
+  CardTier: 0
+  ManaCost: 5
+  SummonData: {fileID: 11400000, guid: a0aef4af2ec48c645ae9e21d0ffd2855, type: 2}
+  SpellEffects:
+  - Effect: 1
+    Target: 0
+    AttributeOne: 1
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 0
+  ResourceOne: 0
+  ResourceOneAmount: 0
+  ResourceTwo: 0
+  ResourceTwoAmount: 0

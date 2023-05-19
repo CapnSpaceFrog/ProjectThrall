@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1560143a753dae74c94312d95db0dbc9, type: 3}
+  m_Name: Searing Gorge
+  m_EditorClassIdentifier: 
+  CardName: Searing Gorge
+  CardDescription: Select a row. All units within it take 10 damage and gain On Fire
+    (2).
+  CardArt: {fileID: -1986287768, guid: 0f566dbfeb9472e4f8fe3addd6d687e6, type: 3}
+  CardSchool: 4
+  CardTier: 3
+  ManaCost: 6
+  SummonData: {fileID: 0}
+  SpellEffects:
+  - Effect: 2
+    Target: 17960
+    AttributeOne: 10
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 0
+  - Effect: 256
+    Target: 4096
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 2
+    AttributeFour: 2
+  ResourceOne: 3
+  ResourceOneAmount: 1
+  ResourceTwo: 3
+  ResourceTwoAmount: 1

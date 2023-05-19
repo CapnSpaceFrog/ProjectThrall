@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1560143a753dae74c94312d95db0dbc9, type: 3}
+  m_Name: Crystal Warriors
+  m_EditorClassIdentifier: 
+  CardName: Crystal Warriors
+  CardDescription: Summon a 1/6 Crystal.
+  CardArt: {fileID: -1615090365, guid: 9d78cc46d9dc5064bb964957e5f95437, type: 3}
+  CardSchool: 25
+  CardTier: 0
+  ManaCost: 3
+  SummonData: {fileID: 11400000, guid: 8d20b31dd304a4e4faae5f391139e00e, type: 2}
+  SpellEffects:
+  - Effect: 1
+    Target: 0
+    AttributeOne: 1
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 0
+  ResourceOne: 0
+  ResourceOneAmount: 0
+  ResourceTwo: 0
+  ResourceTwoAmount: 0

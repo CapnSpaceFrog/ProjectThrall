@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1560143a753dae74c94312d95db0dbc9, type: 3}
+  m_Name: Golden Prism
+  m_EditorClassIdentifier: 
+  CardName: Golden Prism
+  CardDescription: All friendly units gain Blocking and Shielded.
+  CardArt: {fileID: 214258380, guid: a50e7878fe34da44f96b71862ca16ff2, type: 3}
+  CardSchool: 1
+  CardTier: 3
+  ManaCost: 4
+  SummonData: {fileID: 0}
+  SpellEffects:
+  - Effect: 256
+    Target: 960
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 7
+    AttributeFour: -1
+  - Effect: 256
+    Target: 960
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 5
+    AttributeFour: -1
+  ResourceOne: 11
+  ResourceOneAmount: 1
+  ResourceTwo: 11
+  ResourceTwoAmount: 1

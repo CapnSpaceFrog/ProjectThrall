@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea114ac1f1bdd7742be4c6bccc86b625, type: 3}
+  m_Name: Baffling Toad
+  m_EditorClassIdentifier: 
+  SummonName: Baffling Toad
+  SummonArt: {fileID: 1586501295, guid: a50e7878fe34da44f96b71862ca16ff2, type: 3}
+  BaseAttack: 3
+  BaseHealth: 5
+  Range: 1
+  BaseKeywords: 0
+  AbilityEffects:
+  - Trigger: 8
+    Effect: 256
+    Target: 4096
+    AttributeOne: 0
+    AttributeTwo: 3
+    AttributeThree: 1

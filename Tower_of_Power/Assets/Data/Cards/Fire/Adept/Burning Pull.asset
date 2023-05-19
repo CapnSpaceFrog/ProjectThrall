@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1560143a753dae74c94312d95db0dbc9, type: 3}
+  m_Name: Burning Pull
+  m_EditorClassIdentifier: 
+  CardName: Burning Pull
+  CardDescription: Burn (1). Target an enemy unit. It is Pulled (1). If it has On
+    Fire, it is instead Pulled (2).
+  CardArt: {fileID: 1849562819, guid: 0f566dbfeb9472e4f8fe3addd6d687e6, type: 3}
+  CardSchool: 4
+  CardTier: 1
+  ManaCost: 0
+  SummonData: {fileID: 0}
+  SpellEffects:
+  - Effect: 131072
+    Target: 17929
+    AttributeOne: 1
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 0
+  - Effect: 64
+    Target: 512
+    AttributeOne: 1
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 0
+  - Effect: 1048576
+    Target: 4096
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 2
+    AttributeFour: 0
+  - Effect: 131072
+    Target: 4096
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 0
+  ResourceOne: 1
+  ResourceOneAmount: 1
+  ResourceTwo: 1
+  ResourceTwoAmount: 1

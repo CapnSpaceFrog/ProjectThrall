@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea114ac1f1bdd7742be4c6bccc86b625, type: 3}
+  m_Name: Air Wisp
+  m_EditorClassIdentifier: 
+  SummonName: Air Wisp
+  SummonArt: {fileID: -1624533252, guid: a50e7878fe34da44f96b71862ca16ff2, type: 3}
+  BaseAttack: 2
+  BaseHealth: 4
+  Range: 0
+  BaseKeywords: 0
+  AbilityEffects:
+  - Trigger: 16
+    Effect: 2048
+    Target: 1120
+    AttributeOne: 0
+    AttributeTwo: -1
+    AttributeThree: 0

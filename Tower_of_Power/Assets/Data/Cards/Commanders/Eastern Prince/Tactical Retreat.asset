@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1560143a753dae74c94312d95db0dbc9, type: 3}
+  m_Name: Tactical Retreat
+  m_EditorClassIdentifier: 
+  CardName: Tactical Retreat
+  CardDescription: All friendly units gain Stunned (1), Shielded and gain 3 HP and
+    1 Power. Heal 10 HP.
+  CardArt: {fileID: -885494008, guid: 6a35d9b7dc390f248aebe93d7fd96465, type: 3}
+  CardSchool: 25
+  CardTier: 0
+  ManaCost: 5
+  SummonData: {fileID: 0}
+  SpellEffects:
+  - Effect: 256
+    Target: 960
+    AttributeOne: 10
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 1
+  - Effect: 256
+    Target: 960
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 5
+    AttributeFour: -1
+  - Effect: 1024
+    Target: 960
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 3
+    AttributeFour: 0
+  - Effect: 2048
+    Target: 960
+    AttributeOne: 0
+    AttributeTwo: 0
+    AttributeThree: 0
+    AttributeFour: 1
+  ResourceOne: 0
+  ResourceOneAmount: 0
+  ResourceTwo: 0
+  ResourceTwoAmount: 0

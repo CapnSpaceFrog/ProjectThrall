@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea114ac1f1bdd7742be4c6bccc86b625, type: 3}
+  m_Name: Cinder Plains
+  m_EditorClassIdentifier: 
+  SummonName: Cinder Plains
+  SummonArt: {fileID: 1268696876, guid: 0f566dbfeb9472e4f8fe3addd6d687e6, type: 3}
+  BaseAttack: 2
+  BaseHealth: 4
+  Range: 0
+  BaseKeywords: 0
+  AbilityEffects:
+  - Trigger: 64
+    Effect: 1048576
+    Target: 5568
+    AttributeOne: 2
+    AttributeTwo: 0
+    AttributeThree: 0
+  - Trigger: 0
+    Effect: 2
+    Target: 4096
+    AttributeOne: 0
+    AttributeTwo: 1
+    AttributeThree: 0
