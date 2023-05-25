@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 
-public class Row : Touchable
+public class Row : Selectable
 {
 	[Header("Row Specific Variables")]
 	public UnitRange RowType;
@@ -47,7 +47,7 @@ public class Row : Touchable
 		AdjustUnitSpacing();
 	}
 
-	public void SummonToRow(Unit.InstanceState state)
+	public void SummonToRow(Unit.State state)
 	{
 		if (UnitsInRow.Count == MaxUnitsPerRow)
 			return;
@@ -104,13 +104,13 @@ public class Row : Touchable
 	/// </summary>
 	/// <param name="keywordToFind">The keyword to find on units in the row.</param>
 	/// <returns></returns>
-	public List<Touchable> GetTargetsFromRow(Keyword keywordToFind)
+	public List<Selectable> GetTargetsFromRow(Keyword keywordToFind)
 	{
 		return null;
 		//TODO: Redo targeting
 	}
 
-	public List<Touchable> GetTargetsFromRow()
+	public List<Selectable> GetTargetsFromRow()
 	{
 		return null;
 		//TODO: Redo targeting
@@ -187,12 +187,12 @@ public class Row : Touchable
 						if (BattleManager.Instance.ActiveHero == Owner)
 						{
 							Owner.TurnStartTrigger += s.UpdateKeywordVisual;
-							s.Trigger = KeywordState.KeywordUpdate.ParentStartOfTurn;
+							s.UpdatePoint = KeywordState.KeywordUpdate.ParentTurnStart;
 						}
 						else
 						{
 							Owner.EnemyEntity.TurnStartTrigger += s.UpdateKeywordVisual;
-							s.Trigger = KeywordState.KeywordUpdate.ParentStartOfTurn;
+							s.UpdatePoint = KeywordState.KeywordUpdate.EnemyTurnStart;
 						}
 
 						s.Duration += 1;
@@ -268,12 +268,12 @@ public class Row : Touchable
 		if (BattleManager.Instance.ActiveHero == Owner)
 		{
 			Owner.TurnStartTrigger += state.UpdateKeywordVisual;
-			state.Trigger = KeywordState.KeywordUpdate.ParentStartOfTurn;
+			state.UpdatePoint = KeywordState.KeywordUpdate.ParentTurnStart;
 		}
 		else
 		{
 			Owner.EnemyEntity.TurnStartTrigger += state.UpdateKeywordVisual;
-			state.Trigger = KeywordState.KeywordUpdate.ParentStartOfTurn;
+			state.UpdatePoint = KeywordState.KeywordUpdate.EnemyTurnStart;
 		}
 	}
 

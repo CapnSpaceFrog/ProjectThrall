@@ -23,8 +23,8 @@ public class InputHandler : MonoBehaviour
     //public static event Action<InteractInput> OnInteractInput;
     //public static event Action OnMenuInput;
     public static event Action OnLeftMousePress;
-	public static event Action OnLeftMouseCancel;
-	public static event Action OnRightMousePress;
+	 public static event Action OnLeftMouseCancel;
+	 public static event Action OnRightMousePress;
 	#endregion
 
 	public void Awake()

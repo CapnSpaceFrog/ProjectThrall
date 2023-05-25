@@ -15,7 +15,7 @@ public class Card
 	private Quaternion currentRotationInHand;
 	private Vector3 defaultCardSize;
 
-	public Updateable CardWorldInstance;
+	public Moveable CardWorldInstance;
 
 	public SortingGroup CardSortingGroup;
 
@@ -24,7 +24,7 @@ public class Card
 
 	private Entity Owner;
 
-	private List<Touchable> persistentTarget;
+	private List<Selectable> persistentTarget;
 
 	public Card(BaseSpellData data, Entity owner)
 	{
@@ -35,7 +35,7 @@ public class Card
 		//Default scale of the card
 		defaultCardSize = new Vector3(1.55f, 1.65f, 1f);
 
-		persistentTarget = new List<Touchable>();
+		persistentTarget = new List<Selectable>();
 	}
 
 	public void CreateCardWorldInstance(Hand hand)
@@ -54,8 +54,8 @@ public class Card
 		GameObject cardObj = GameObject.Instantiate(BattleManager.Instance.CardPrefab);
 		cardObj.name = Data.CardName;
 
-		CardWorldInstance = cardObj.AddComponent<Updateable>();
-		CardWorldInstance.Type = TouchableType.Card;
+		CardWorldInstance = cardObj.AddComponent<Moveable>();
+		CardWorldInstance.Type = SelectionType.Card;
 
 		CardWorldInstance.InstanceInfo = this;
 
@@ -78,7 +78,7 @@ public class Card
 		#endregion
 
 		#region WhenTouched Delegate
-		CardWorldInstance.Touched = () =>
+		CardWorldInstance.ReceivedPrimary = () =>
 		{
 			//Specifics with on touch function go here.
 			return true;
@@ -86,7 +86,7 @@ public class Card
 		#endregion
 
 		#region WhenTouchedUpdate Delegate
-		CardWorldInstance.WhileTouched = (Vector3 mouseWorldPos) =>
+		CardWorldInstance.WhileSelected = (Vector3 mouseWorldPos) =>
 		{
 			BattleManager.Instance.Crosshair.transform.position = mouseWorldPos;
 
@@ -126,7 +126,7 @@ public class Card
 		#endregion
 
 		#region WhenCancelled Delegate
-		CardWorldInstance.InputCancelled = () =>
+		CardWorldInstance.ReceivedSecondary = () =>
 		{
 			BattleManager.Instance.Crosshair.SetActive(false);
 			SetCardTransform();
@@ -143,8 +143,8 @@ public class Card
 
 		cardObj.layer = LayerMask.NameToLayer("Enemy Card");
 
-		CardWorldInstance = cardObj.AddComponent<Updateable>();
-		CardWorldInstance.Type = TouchableType.Card;
+		CardWorldInstance = cardObj.AddComponent<Moveable>();
+		CardWorldInstance.Type = SelectionType.Card;
 
 		CardWorldInstance.InstanceInfo = this;
 
@@ -360,7 +360,7 @@ public class Card
 
 	bool FlatDamageInstant(SpellEffect spell)
 	{
-		if (!TargetingHandler.FindTargets(spell.Target, Owner, out List<Touchable> targets))
+		if (!TargetingHandler.FindTargets(spell.Target, Owner, out List<Selectable> targets))
 			return false;
 
 		Target whatToTarget = spell.Target & (Target.Single | Target.Bounce);
@@ -376,7 +376,7 @@ public class Card
 
 			case Target.Bounce:
 				int index = UnityEngine.Random.Range(0, targets.Count);
-				Touchable lastTarget = targets[index];
+				Selectable lastTarget = targets[index];
 				for (int i = 0; i < spell.AttributeFour; i++)
 				{
 
@@ -395,7 +395,7 @@ public class Card
 		}
 
 		//If no target specification is provided, we just hit all the targets that we found.
-		foreach (Touchable t in targets)
+		foreach (Selectable t in targets)
 		{
 			d = (Damageable)t;
 			d.Damaged(spell.AttributeOne);
@@ -411,7 +411,7 @@ public class Card
 
 	bool CheckRequiredState(SpellEffect spell)
 	{
-		List<Touchable> targets;
+		List<Selectable> targets;
 
 		Target whatToTarget = spell.Target & (Target.Persistent);
 
@@ -420,7 +420,7 @@ public class Card
 			case Target.Persistent:
 				Keyword key = (Keyword)(1 << spell.AttributeThree);
 
-				foreach (Touchable t in persistentTarget)
+				foreach (Selectable t in persistentTarget)
 				{
 					Unit u = (Unit)t.InstanceInfo;
 					if (u.HasKeyword(key))
@@ -438,7 +438,7 @@ public class Card
 				if (!TargetingHandler.FindTargets(spell.Target, Owner, key, out targets))
 					return false;
 
-				foreach (Touchable t in targets)
+				foreach (Selectable t in targets)
 					persistentTarget.Add(t);
 
 				PrintTargets(targets);
@@ -565,7 +565,7 @@ public class Card
 	}
 	#endregion
 
-	void PrintTargets(List<Touchable> targets)
+	void PrintTargets(List<Selectable> targets)
 	{
 		if (targets == null)
 		{
@@ -575,7 +575,7 @@ public class Card
 
 		string s = "";
 
-		foreach (Touchable target in targets)
+		foreach (Selectable target in targets)
 			s += $"{target.gameObject.name}; ";
 
 		Debug.Log("<color=green>[Unit]</color>: Targets found: " + s);

@@ -3,25 +3,23 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using TMPro;
-using System.Runtime.InteropServices;
 
 public class KeywordState
 {
 	public enum KeywordUpdate
 	{
-		ParentStartOfTurn,
-		ParentEndOfTurn,
-		EnemyStartOfTurn,
-		EnemyEndOfTurn
+		ParentTurnStart,
+		EnemyTurnStart,
 	}
 
-	public Touchable Parent;
+	public Selectable Parent;
 	public Entity Owner;
 	public Keyword Key;
 	public int Duration;
 	public GameObject Visual;
-	public KeywordUpdate Trigger;
+	public KeywordUpdate UpdatePoint;
 
+	#region Helper Functions
 	public void DecayDuration()
 	{
 		if (Duration == -1
@@ -39,17 +37,17 @@ public class KeywordState
 		{
 			switch (Parent.Type)
 			{
-				case TouchableType.Unit:
+				case SelectionType.Unit:
 					Unit u = (Unit)Parent.InstanceInfo;
 					u.RemoveKeyword(Key);
 					break;
 
-				case TouchableType.Row:
+				case SelectionType.Row:
 					Row r = (Row)Parent;
 					r.RemoveKeyword(Key);
 					break;
 
-				case TouchableType.Hero:
+				case SelectionType.Hero:
 
 					break;
 			}
@@ -60,25 +58,18 @@ public class KeywordState
 
 	public void ClearKeyUpdateSub()
 	{
-		switch (Trigger)
+		switch (UpdatePoint)
 		{
-			case KeywordUpdate.ParentStartOfTurn:
+			case KeywordUpdate.ParentTurnStart:
 				Owner.TurnStartTrigger -= UpdateKeywordVisual;
 				break;
 
-			case KeywordUpdate.ParentEndOfTurn:
-				Owner.TurnEndTrigger -= UpdateKeywordVisual;
-				break;
-
-			case KeywordUpdate.EnemyStartOfTurn:
+			case KeywordUpdate.EnemyTurnStart:
 				Owner.EnemyEntity.TurnStartTrigger -= UpdateKeywordVisual;
-				break;
-
-			case KeywordUpdate.EnemyEndOfTurn:
-				Owner.EnemyEntity.TurnEndTrigger -= UpdateKeywordVisual;
 				break;
 		}
 	}
+	#endregion
 }
 
 public struct StatState
@@ -163,7 +154,7 @@ public struct StatState
 
 public class Unit
 {
-	public struct InstanceState
+	public struct State
 	{
 		public string Name;
 		public string Description;
@@ -178,12 +169,12 @@ public class Unit
 		public Entity Owner;
 		public Row CurrentRow;
 
-		public Updateable TouchableInstance;
+		public Damageable DamageableInstance;
 		public SpriteRenderer SR;
 		public Transform Transform;
 	}
 
-	private InstanceState WorldState;
+	private State WorldState;
 
 	Vector3 positionOnRow;
 	Quaternion defaultRotation;
@@ -201,7 +192,7 @@ public class Unit
 		defaultUnitScale = new Vector3(0.41f, 0.41f, 1);
 		hoveredUnitScale = new Vector3(0.475f, 0.475f, 1);
 
-		WorldState = new InstanceState();
+		WorldState = new State();
 
 		WorldState.Stats = new StatState(data.BaseHealth, data.BaseAttack);
 
@@ -218,7 +209,7 @@ public class Unit
 		OnSummon();
 	}
 
-	public Unit(InstanceState state)
+	public Unit(State state)
 	{
 		WorldState = state;
 
@@ -235,10 +226,10 @@ public class Unit
 		WorldState.Transform = unitObj.transform;
 		unitObj.name = WorldState.Name;
 
-		WorldState.TouchableInstance = unitObj.AddComponent<Updateable>();
-		WorldState.TouchableInstance.Type = TouchableType.Unit;
+		WorldState.DamageableInstance = unitObj.AddComponent<Damageable>();
+		WorldState.DamageableInstance.Type = SelectionType.Unit;
 
-		WorldState.TouchableInstance.InstanceInfo = this;
+		WorldState.DamageableInstance.InstanceInfo = this;
 
 		unitObj.AddComponent<BoxCollider>().size = new Vector3(7.65f, 10.5f, 0.1f);
 
@@ -263,7 +254,7 @@ public class Unit
 			unitObj.layer = LayerMask.NameToLayer("Friendly Unit");
 
 			#region Touched Delegate
-			WorldState.TouchableInstance.Touched = () =>
+			WorldState.DamageableInstance.ReceivedPrimary = () =>
 			{
 				//Specifics with on touch function go here.
 				if (WorldState.hasAttacked == true || WorldState.Stats.CurrentAttack() == 0
@@ -281,16 +272,16 @@ public class Unit
 			#endregion
 
 			#region WhileTouched Delegate
-			WorldState.TouchableInstance.WhileTouched = (Vector3 mouseWorldPos) =>
+			WorldState.DamageableInstance.WhileSelected = (Vector3 mouseWorldPos) =>
 			{
 				BattleManager.Instance.Crosshair.transform.position = mouseWorldPos;
 			};
 			#endregion
 
 			#region Released Delegate
-			WorldState.TouchableInstance.Released = () =>
+			WorldState.DamageableInstance.Released = () =>
 			{
-				BattleManager.Instance.RaycastFromMousePosition(LayerMask.GetMask("Enemy Unit", "Enemy Hero"), out Touchable entityTouched);
+				BattleManager.Instance.RaycastFromMousePosition(LayerMask.GetMask("Enemy Unit", "Enemy Hero"), out Selectable entityTouched);
 				Damageable target = (Damageable)entityTouched;
 
 				if (entityTouched == null)
@@ -311,7 +302,7 @@ public class Unit
 			#endregion
 
 			#region InputCancelled Delegate
-			WorldState.TouchableInstance.InputCancelled = () =>
+			WorldState.DamageableInstance.ReceivedSecondary = () =>
 			{
 				WorldState.isSelected = false;
 				SetUnitTransform();
@@ -325,7 +316,7 @@ public class Unit
 
 		//TODO: Find a better solution to damage and refactor the "touchable" class
 		#region Damaged Delegate
-		WorldState.TouchableInstance.Damaged = (damageReceived) =>
+		WorldState.DamageableInstance.Damaged = (damageReceived) =>
 		{
 			if (HasKeyword(Keyword.Shielded))
 			{
@@ -355,7 +346,7 @@ public class Unit
 		#endregion
 
 		#region Healed Delegate
-		WorldState.TouchableInstance.Healed = (int healingReceived) =>
+		WorldState.DamageableInstance.Healed = (int healingReceived) =>
 		{
 			//Debug.Log($"<color=orange>[Unit]</color>: {summonData.name} received {healingReceived} points of healing.");
 			WorldState.Stats.AdjustLostHealth(-healingReceived);
@@ -414,7 +405,7 @@ public class Unit
 	{
 		GameObject.Destroy(WorldState.Transform.gameObject);
 		
-		WorldState.TouchableInstance = null;
+		WorldState.DamageableInstance = null;
 	}
 	#endregion
 
@@ -425,7 +416,7 @@ public class Unit
 		{
 			OnAttackTrigger?.Invoke();
 
-			if (target.Type == TouchableType.Hero)
+			if (target.Type == SelectionType.Hero)
 			{
 				Entity entityTargeted = (Entity)target.InstanceInfo;
 
@@ -448,7 +439,7 @@ public class Unit
 
 				target.Damaged(WorldState.Stats.CurrentAttack());
 
-				WorldState.TouchableInstance.Damaged(unitTarget.WorldState.Stats.CurrentAttack());
+				WorldState.DamageableInstance.Damaged(unitTarget.WorldState.Stats.CurrentAttack());
 
 				OnDamageTrigger?.Invoke();
 
@@ -557,9 +548,9 @@ public class Unit
 			switch (keyState.Key)
 			{
 				case Keyword.Legion:
-					TargetingHandler.FindTargets(Target.Friendly | Target.AllRows, WorldState.Owner, Keyword.Legion, out List<Touchable> targets);
+					TargetingHandler.FindTargets(Target.Friendly | Target.AllRows, WorldState.Owner, Keyword.Legion, out List<Selectable> targets);
 					int legionBonus = 0;
-					foreach (Touchable t in targets)
+					foreach (Selectable t in targets)
 					{
 						Unit u = (Unit)t.InstanceInfo;
 
@@ -640,9 +631,9 @@ public class Unit
 		else if (chance < 50)
 		{
 			//Hit unit within same row as target, or if ur targeting the hero, just a random unit
-			if (originalTarget.Type == TouchableType.Hero)
+			if (originalTarget.Type == SelectionType.Hero)
 			{
-				TargetingHandler.FindTargets((Target.Enemy | Target.AllRows), WorldState.Owner, out List<Touchable> targets);
+				TargetingHandler.FindTargets((Target.Enemy | Target.AllRows), WorldState.Owner, out List<Selectable> targets);
 
 				int index = UnityEngine.Random.Range(0, targets.Count);
 
@@ -652,7 +643,7 @@ public class Unit
 			{
 				Unit u = (Unit)originalTarget.InstanceInfo;
 
-				List<Touchable> targets = u.WorldState.CurrentRow.GetTargetsFromRow();
+				List<Selectable> targets = u.WorldState.CurrentRow.GetTargetsFromRow();
 				int index = UnityEngine.Random.Range(0, targets.Count);
 
 				targets.Remove(originalTarget);
@@ -664,9 +655,9 @@ public class Unit
 		{
 			//Return a random target excluding the row of the unit
 
-			TargetingHandler.FindTargets((Target.Enemy | Target.AllRows | Target.Hero), WorldState.Owner, out List<Touchable> allTargets);
+			TargetingHandler.FindTargets((Target.Enemy | Target.AllRows | Target.Hero), WorldState.Owner, out List<Selectable> allTargets);
 
-			if (originalTarget.Type == TouchableType.Hero)
+			if (originalTarget.Type == SelectionType.Hero)
 			{
 				allTargets.Remove(originalTarget);
 				int index = UnityEngine.Random.Range(0, allTargets.Count);
@@ -676,9 +667,9 @@ public class Unit
 			{
 				Unit u = (Unit)originalTarget.InstanceInfo;
 
-				List<Touchable> targetsFromRow = u.WorldState.CurrentRow.GetTargetsFromRow();
+				List<Selectable> targetsFromRow = u.WorldState.CurrentRow.GetTargetsFromRow();
 
-				foreach (Touchable t in targetsFromRow)
+				foreach (Selectable t in targetsFromRow)
 				{
 					if (allTargets.Contains(t))
 						allTargets.Remove(t);
@@ -727,12 +718,12 @@ public class Unit
 						if (BattleManager.Instance.ActiveHero == WorldState.Owner)
 						{
 							WorldState.Owner.TurnStartTrigger += s.UpdateKeywordVisual;
-							s.Trigger = KeywordState.KeywordUpdate.ParentStartOfTurn;
+							s.UpdatePoint = KeywordState.KeywordUpdate.ParentTurnStart;
 						}
 						else
 						{
 							WorldState.Owner.EnemyEntity.TurnStartTrigger += s.UpdateKeywordVisual;
-							s.Trigger = KeywordState.KeywordUpdate.ParentStartOfTurn;
+							s.UpdatePoint = KeywordState.KeywordUpdate.EnemyTurnStart;
 						}
 
 						s.Duration += 1;
@@ -747,7 +738,7 @@ public class Unit
 		KeywordState keyState = new KeywordState();
 		keyState.Key = keywordToAdd.Key;
 		keyState.Duration = keywordToAdd.Value;
-		keyState.Parent = WorldState.TouchableInstance;
+		keyState.Parent = WorldState.DamageableInstance;
 		keyState.Owner = WorldState.Owner;
 		WorldState.ActiveKeywords.Add(keyState);
 
@@ -891,12 +882,12 @@ public class Unit
 		if (BattleManager.Instance.ActiveHero == WorldState.Owner)
 		{
 			WorldState.Owner.TurnStartTrigger += state.UpdateKeywordVisual;
-			state.Trigger = KeywordState.KeywordUpdate.ParentStartOfTurn;
+			state.UpdatePoint = KeywordState.KeywordUpdate.ParentTurnStart;
 		}
 		else
 		{
 			WorldState.Owner.EnemyEntity.TurnStartTrigger += state.UpdateKeywordVisual;
-			state.Trigger = KeywordState.KeywordUpdate.ParentStartOfTurn;
+			state.UpdatePoint = KeywordState.KeywordUpdate.EnemyTurnStart;
 		}
 	}
 

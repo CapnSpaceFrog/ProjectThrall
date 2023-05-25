@@ -14,7 +14,7 @@ public class BattleManager : MonoBehaviour
 	public float MouseWorldYOffset;
 	public GameObject Crosshair;
 	public static LayerMask Touchables;
-	private Updateable CurrentSelectedMoveable;
+	private Moveable CurrentSelectedMoveable;
 	private Vector3 MouseWorldPosition => BattleCam.ScreenToWorldPoint(InputHandler.MousePosition);
 	private Vector3 MouseOffsetWorldPosition => new Vector3(MouseWorldPosition.x, MouseWorldYOffset, MouseWorldPosition.z);
 
@@ -132,7 +132,7 @@ public class BattleManager : MonoBehaviour
 		turnTimer += Time.deltaTime;
 
 		if (CurrentSelectedMoveable != null)
-			CurrentSelectedMoveable.WhileTouched(MouseOffsetWorldPosition);
+			CurrentSelectedMoveable.WhileSelected(MouseOffsetWorldPosition);
 	}
 
 	#region Input Functions
@@ -147,29 +147,29 @@ public class BattleManager : MonoBehaviour
 
 		LayerMask PlayerTouchable = LayerMask.GetMask("Friendly Unit", "Player Card", "Friendly Hero", "Enemy Hero", "Turn Button");
 
-		RaycastFromMousePosition(PlayerTouchable, out Touchable objTouched);
+		RaycastFromMousePosition(PlayerTouchable, out Selectable objTouched);
 
 		if (objTouched == null)
 			return;
 
 		switch (objTouched.Type)
 		{
-			case TouchableType.Card:
-				CurrentSelectedMoveable = (Updateable)objTouched;
-				CurrentSelectedMoveable.Touched();
+			case SelectionType.Card:
+				CurrentSelectedMoveable = (Moveable)objTouched;
+				CurrentSelectedMoveable.ReceivedPrimary();
 				break;
 
-			case TouchableType.Unit:
-				Updateable updateable = (Updateable)objTouched;
-				if (updateable.Touched())
+			case SelectionType.Unit:
+				Moveable updateable = (Moveable)objTouched;
+				if (updateable.ReceivedPrimary())
 					CurrentSelectedMoveable = updateable;
 				break;
 
-			case TouchableType.Hero:
+			case SelectionType.Hero:
 				Debug.Log("Touched Entity");
 				break;
 
-			case TouchableType.Button:
+			case SelectionType.Button:
 				ActiveHeroEndedTurn = true;
 				break;
 		}
@@ -202,7 +202,7 @@ public class BattleManager : MonoBehaviour
 
 		if (CurrentSelectedMoveable != null)
 		{
-			CurrentSelectedMoveable.InputCancelled();
+			CurrentSelectedMoveable.ReceivedSecondary();
 			CurrentSelectedMoveable = null;
 		}
 	}
@@ -212,7 +212,7 @@ public class BattleManager : MonoBehaviour
 	/// </summary>
 	/// <param name="validObjMask">The LayerMask of the Card currently being held.</param>
 	/// <returns>A valid Touchable based on the validObjMask. Returns null if nothing was hit.</returns>
-	public bool RaycastFromMousePosition(LayerMask validObjMask, out Touchable objTouched)
+	public bool RaycastFromMousePosition(LayerMask validObjMask, out Selectable objTouched)
 	{
 		objTouched = null;
 
@@ -223,7 +223,7 @@ public class BattleManager : MonoBehaviour
 
 		if (Physics.Raycast(mouseToPlayboard, out RaycastHit hitObj, MouseWorldYOffset, validObjMask))
 		{
-			objTouched = hitObj.transform.GetComponent<Touchable>();
+			objTouched = hitObj.transform.GetComponent<Selectable>();
 			return true;
 		}
 

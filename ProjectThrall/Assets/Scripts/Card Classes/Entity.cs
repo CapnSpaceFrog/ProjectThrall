@@ -113,9 +113,9 @@ public class Entity : MonoBehaviour
 	#endregion
 
 	#region Targeting Functions
-	public List<Touchable> QueryForTargets(Target targetInfo)
+	public List<Selectable> QueryForTargets(Target targetInfo)
 	{
-		List<Touchable> validTargets = new List<Touchable>(0);
+		List<Selectable> validTargets = new List<Selectable>(0);
 
 		if ((targetInfo & Target.Hero) == Target.Hero)
 			validTargets.Add(EntityDamageable);
@@ -125,36 +125,36 @@ public class Entity : MonoBehaviour
 		switch (rowToTarget)
 		{
 			case Target.MeleeRow:
-				foreach (Touchable t in MeleeRow.GetTargetsFromRow())
+				foreach (Selectable t in MeleeRow.GetTargetsFromRow())
 					validTargets.Add(t);
 				break;
 
 			case Target.RangedRow:
-				foreach (Touchable t in RangedRow.GetTargetsFromRow())
+				foreach (Selectable t in RangedRow.GetTargetsFromRow())
 					validTargets.Add(t);
 				break;
 
 			case Target.SiegeRow:
-				foreach (Touchable t in SiegeRow.GetTargetsFromRow())
+				foreach (Selectable t in SiegeRow.GetTargetsFromRow())
 					validTargets.Add(t);
 				break;
 
 			case (Target.RangedRow | Target.SiegeRow):
-				foreach (Touchable t in RangedRow.GetTargetsFromRow())
+				foreach (Selectable t in RangedRow.GetTargetsFromRow())
 					validTargets.Add(t);
 
-				foreach (Touchable t in SiegeRow.GetTargetsFromRow())
+				foreach (Selectable t in SiegeRow.GetTargetsFromRow())
 					validTargets.Add(t);
 				break;
 
 			case Target.AllRows:
-				foreach (Touchable t in MeleeRow.GetTargetsFromRow())
+				foreach (Selectable t in MeleeRow.GetTargetsFromRow())
 					validTargets.Add(t);
 
-				foreach (Touchable t in RangedRow.GetTargetsFromRow())
+				foreach (Selectable t in RangedRow.GetTargetsFromRow())
 					validTargets.Add(t);
 
-				foreach (Touchable t in SiegeRow.GetTargetsFromRow())
+				foreach (Selectable t in SiegeRow.GetTargetsFromRow())
 					validTargets.Add(t);
 				break;
 
@@ -166,9 +166,9 @@ public class Entity : MonoBehaviour
 		return validTargets;
 	}
 
-	public List<Touchable> QueryForTargets(Target target, Keyword keywordToFind)
+	public List<Selectable> QueryForTargets(Target target, Keyword keywordToFind)
 	{
-		List<Touchable> validTargets = new List<Touchable>(0);
+		List<Selectable> validTargets = new List<Selectable>(0);
 
 		if ((target & Target.Hero) == Target.Hero)
 			validTargets.Add(EntityDamageable);
@@ -178,28 +178,28 @@ public class Entity : MonoBehaviour
 		switch (rowToTarget)
 		{
 			case Target.MeleeRow:
-				foreach (Touchable t in MeleeRow.GetTargetsFromRow(keywordToFind))
+				foreach (Selectable t in MeleeRow.GetTargetsFromRow(keywordToFind))
 					validTargets.Add(t);
 				break;
 
 			case Target.RangedRow:
-				foreach (Touchable t in RangedRow.GetTargetsFromRow(keywordToFind))
+				foreach (Selectable t in RangedRow.GetTargetsFromRow(keywordToFind))
 					validTargets.Add(t);
 				break;
 
 			case Target.SiegeRow:
-				foreach (Touchable t in SiegeRow.GetTargetsFromRow(keywordToFind))
+				foreach (Selectable t in SiegeRow.GetTargetsFromRow(keywordToFind))
 					validTargets.Add(t);
 				break;
 
 			case Target.AllRows:
-				foreach (Touchable t in MeleeRow.GetTargetsFromRow(keywordToFind))
+				foreach (Selectable t in MeleeRow.GetTargetsFromRow(keywordToFind))
 					validTargets.Add(t);
 
-				foreach (Touchable t in RangedRow.GetTargetsFromRow(keywordToFind))
+				foreach (Selectable t in RangedRow.GetTargetsFromRow(keywordToFind))
 					validTargets.Add(t);
 
-				foreach (Touchable t in SiegeRow.GetTargetsFromRow(keywordToFind))
+				foreach (Selectable t in SiegeRow.GetTargetsFromRow(keywordToFind))
 					validTargets.Add(t);
 				break;
 

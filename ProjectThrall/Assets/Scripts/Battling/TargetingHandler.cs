@@ -4,23 +4,23 @@ using UnityEngine;
 
 public static class TargetingHandler
 {
-   public static bool FindTargets(Target targetInfo, Entity Owner, out List<Touchable> targets)
+   public static bool FindTargets(Target targetInfo, Entity Owner, out List<Selectable> targets)
    {
-		targets = new List<Touchable>();
+		targets = new List<Selectable>();
 
       return false;
    }
 
-	public static bool FindTargets(Target targetInfo, Entity Owner, Keyword searchKeyword, out List<Touchable> targets)
+	public static bool FindTargets(Target targetInfo, Entity Owner, Keyword searchKeyword, out List<Selectable> targets)
 	{
-		targets = new List<Touchable>();
+		targets = new List<Selectable>();
 
 		return false;
 	}
 
-	private static Touchable GetChosenTarget(Target targetInfo)
+	private static Selectable GetChosenTarget(Target targetInfo)
 	{
-		if (BattleManager.Instance.RaycastFromMousePosition(BattleManager.GetLayerFromTarget(targetInfo), out Touchable touchedEntity))
+		if (BattleManager.Instance.RaycastFromMousePosition(BattleManager.GetLayerFromTarget(targetInfo), out Selectable touchedEntity))
 			return touchedEntity;
 		else return null;
 	}
@@ -30,7 +30,7 @@ public static class TargetingHandler
 		return false;
 	}
 
-	public static bool CheckValidTarget(Unit.InstanceState source, Damageable target)
+	public static bool CheckValidTarget(Unit.State source, Damageable target)
 	{
 		if (target == null)
 			return false;
@@ -38,7 +38,7 @@ public static class TargetingHandler
 		//if (HasKeyword(Keyword.Flying) || HasKeyword(Keyword.Confused))
 		//	return true;
 
-		if (target.Type == TouchableType.Hero)
+		if (target.Type == SelectionType.Hero)
 		{
 			Entity e = (Entity)target.InstanceInfo;
 
@@ -105,7 +105,7 @@ public static class TargetingHandler
 	}
 
 	#region Debug Print Functions
-	public static void PrintTargets(List<Touchable> targets)
+	public static void PrintTargets(List<Selectable> targets)
 	{
 		if (targets == null)
 		{
@@ -115,7 +115,7 @@ public static class TargetingHandler
 
 		string s = "";
 
-		foreach (Touchable target in targets)
+		foreach (Selectable target in targets)
 			s += $"{target.gameObject.name}; ";
 
 		Debug.Log("<color=green>[Unit]</color>: Targets found: " + s);
